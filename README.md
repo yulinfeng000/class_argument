@@ -74,6 +74,10 @@ usage: example.py [-h] --operator OPERATOR x y
 example.py: error: the following arguments are required: x, y, --operator/-opt
 ```
 
+## 安装
+
+`pip install class-arguments`
+
 ## 说明
 
 - 开发动机纯粹为了取悦自己而对 argparser 模块进行了包装
