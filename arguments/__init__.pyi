@@ -22,7 +22,23 @@ _NArgsStr: TypeAlias = str
 
 _SUPPRESS_T = NewType("_SUPPRESS_T", str)
 
-class Option:
+def Option(
+    *name_or_flags: str,
+    action: _ActionStr | type[Action] = ...,
+    nargs: int | _NArgsStr | _SUPPRESS_T = ...,
+    const: Any = ...,
+    default: Any = ...,
+    type: Callable[[str], _T] | FileType = ...,
+    choices: Iterable[_T] | None = ...,
+    required: bool = ...,
+    help: str | None = ...,
+    metavar: str | tuple[str, ...] | None = ...,
+    dest: str | None = ...,
+    version: str = ...,
+    **kwargs: Any,
+) -> Any: ...
+
+class _Option:
     def __init__(
         self,
         *name_or_flags: str,
@@ -40,6 +56,7 @@ class Option:
         **kwargs: Any,
     ) -> None: ...
     def params(self) -> Tuple[Tuple, Dict]: ...
+    def flags(self, prefix) -> str: ...
 
 class Argument:
     def __init__(

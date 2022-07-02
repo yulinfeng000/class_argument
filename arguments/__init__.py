@@ -1,7 +1,12 @@
 from argparse import ArgumentParser, HelpFormatter
+from typing import Any
 
 
-class Option:
+def Option(*name_or_flags, **kwargs) -> Any:
+    return _Option(*name_or_flags, **kwargs)
+
+
+class _Option:
     def __init__(self, *name_or_flags, **kwargs):
         self.name_or_flags = name_or_flags
         self.kwargs = kwargs
@@ -9,7 +14,7 @@ class Option:
     def params(self):
         return self.name_or_flags, self.kwargs
 
-    def param_name(self, prefix_chars: str):
+    def flags(self, prefix_chars: str):
         return self.name_or_flags[0].replace(prefix_chars, "")
 
 
@@ -28,7 +33,6 @@ class Argument(ArgumentParser):
         conflict_handler="error",
         add_help=True,
         allow_abbrev=True,
-        exit_on_error=True,
     ):
         description = description or self.__doc__
         superinit = ArgumentParser.__init__
@@ -43,7 +47,6 @@ class Argument(ArgumentParser):
             fromfile_prefix_chars=fromfile_prefix_chars,
             add_help=add_help,
             allow_abbrev=allow_abbrev,
-            exit_on_error=exit_on_error,
             description=description,
             argument_default=argument_default,
             conflict_handler=conflict_handler,
@@ -61,6 +64,6 @@ class Argument(ArgumentParser):
         except AttributeError:
             return getattr(self._args, __name)
 
-        if isinstance(v, Option):
-            return getattr(self._args, v.param_name(self.prefix_chars))
+        if isinstance(v, _Option):
+            return getattr(self._args, v.flags(self.prefix_chars))
         return v

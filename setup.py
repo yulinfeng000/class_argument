@@ -5,7 +5,7 @@ with open("./README.md", "r") as f:
 
 setuptools.setup(
     name="class_arguments",
-    version="0.0.1",
+    version="0.0.2",
     author="cam",
     author_email="yulinfeng000@gmail.com",
     package_data={
